@@ -19,7 +19,7 @@ function setup() {
   balloon.addAnimation("hotAirBalloon",balloonImage1);
   balloon.scale=0.3;
 
-  var balloonPosition=database.ref('balloon/height');
+  var balloonPosition=database.ref('balloon/position');
   balloonPosition.on("value",readPosition,showError);
 
   textSize(20); 
@@ -28,7 +28,7 @@ function setup() {
 // function to display UI
 function draw() {
   background(bg);
-
+if(position!==undefined){
   if(keyDown(LEFT_ARROW)){
     balloon.addAnimation("hotAirBalloon",balloonImage2);
     //write code to move air balloon in left direction
@@ -55,7 +55,7 @@ function draw() {
     balloon.addAnimation("hotAirBalloon",balloonImage2);
 
   }
-
+}
   drawSprites();
   fill(0);
   stroke("white");
@@ -64,17 +64,17 @@ function draw() {
 }
 
 function updateHeight(x,y){
-  database.ref('balloon/height').set({
-    'x': height.x + x ,
-    'y':height.y + y
+  database.ref('balloon/position').set({
+    'x': position.x + x ,
+    'y':position.y + y
   })
   }
 
 function readPosition(data){
-  height=data.val();
-  console.log(height.x);
-  balloon.x=height.x;
-  balloon.y=height.y;
+  position=data.val();
+  console.log(position.x);
+  balloon.x=position.x;
+  balloon.y=position.y;
 }
 
 function showError(){
